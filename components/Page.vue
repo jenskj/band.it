@@ -8,7 +8,7 @@
 .page {
   display: grid;
   gap: 1rem;
-  max-width: 930px;
+  max-width: 768px;
   height: 100%;
   margin: auto;
   padding: 1rem;

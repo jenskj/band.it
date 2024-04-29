@@ -1,7 +1,7 @@
 <script lang="ts" setup>
 defineProps<{
   title: string;
-  count: number;
+  additionalInfo?: number;
 }>();
 </script>
 
@@ -9,7 +9,7 @@ defineProps<{
   <div class="header">
     <div class="header__title-container">
       <h1 class="header__title">{{ title }}</h1>
-      <div class="header__count" v-if="count">({{ count }})</div>
+      <div class="header__additional-info" v-if="additionalInfo">({{ additionalInfo }})</div>
     </div>
     <hr class="header__divider" />
   </div>
@@ -33,7 +33,7 @@ defineProps<{
     }
   }
 
-  &__count {
+  &__additional-info {
     font-size: 1.5rem;
     color: lightgray;
   }

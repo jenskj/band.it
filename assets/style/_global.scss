@@ -4,6 +4,10 @@
   box-sizing: border-box;
 }
 
+html {
+  overflow: scroll;
+}
+
 button {
   border: none;
   margin: 0;
@@ -13,4 +17,15 @@ button {
   background: transparent;
   color: inherit;
   font: inherit;
+}
+
+ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+a {
+  color: inherit;
+  text-decoration: inherit;
 }
