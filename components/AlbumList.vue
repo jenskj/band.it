@@ -7,15 +7,16 @@ import CardViewSolid from "../assets/icons/Card view_solid.svg";
 import ListViewOutline from "../assets/icons/List view_outline.svg";
 import ListViewSolid from "../assets/icons/List view_solid.svg";
 
-defineProps<{
-  albums?: AlbumInfo[];
-}>();
-
-const currentView = ref("list");
+const currentView = ref("card");
 const toggleView = (newView: string) => {
   currentView.value = newView;
   nuxtStorage.localStorage.setData("view", newView);
 };
+
+defineProps<{
+  albums?: AlbumInfo[];
+}>();
+
 onMounted(() => {
   const storedView = nuxtStorage.localStorage.getData("view");
   if (storedView) {
@@ -41,9 +42,7 @@ onMounted(() => {
       class="album-list__container"
       :class="{ 'album-list__container--card': currentView === 'card' }"
     >
-      <NuxtLink v-for="album in albums" :to="`/${album.idAlbum || ''}`">
-        <AlbumListItem :album-info="album" :view-type="currentView" />
-      </NuxtLink>
+        <AlbumListItem v-for="album in albums" :album-info="album" :view-type="currentView" />
     </ul>
   </div>
 </template>

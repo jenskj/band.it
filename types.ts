@@ -6,4 +6,5 @@ export interface AlbumInfo {
   intYearReleased?: number;
   strDescriptionEN?: string;
   strReview?: string;
+  intScoreVotes?: string;
 }

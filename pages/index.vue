@@ -1,5 +1,6 @@
 <script lang="ts" setup>
 import type { AlbumInfo } from "~/types";
+
 const { data: value } = await useFetch(
   "https://www.theaudiodb.com/api/v1/json/2/album.php?i=111418"
 );
@@ -18,7 +19,10 @@ const albumsByYear = computed(() =>
 
 <template>
   <Page>
-    <PageHeader :additional-info="albumsByYear.length" title="Albums" />
+    <PageHeader
+      :additional-info="albumsByYear.length.toString()"
+      title="Albums"
+    />
     <AlbumList :albums="albumsByYear" />
   </Page>
 </template>

@@ -1,21 +1,27 @@
 <script setup lang="ts">
+import type { AlbumInfo } from "~/types";
+
 defineProps<{
-  coverUrl?: string;
-  albumName?: string;
+  albumInfo?: AlbumInfo;
   disableHoverEffect?: boolean;
 }>();
 </script>
 
 <template>
   <div
+    v-if="albumInfo"
     class="album-cover__container"
     :class="{
       'album-cover__container--hover-effect': !Boolean(disableHoverEffect),
     }"
   >
     <img
-      :src="coverUrl ? coverUrl : 'https://mtclinic.org/wp-content/uploads/2021/09/Photo-Unavailable.jpg'"
-      :alt="albumName || ''"
+      :src="
+        albumInfo.strAlbumThumb
+          ? albumInfo.strAlbumThumb
+          : 'https://mtclinic.org/wp-content/uploads/2021/09/Photo-Unavailable.jpg'
+      "
+      :alt="albumInfo.strAlbum || ''"
       class="album-cover"
     />
   </div>
@@ -27,6 +33,8 @@ defineProps<{
   width: 100%;
   object-fit: cover;
   position: relative;
+  box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+
   &__container {
     aspect-ratio: 1/1;
 

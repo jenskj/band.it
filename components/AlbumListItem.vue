@@ -8,29 +8,36 @@ defineProps<{
 </script>
 
 <template>
-  <li class="album-list-item">
+  <li class="album-list-item" :title="albumInfo?.strAlbum">
     <div v-if="albumInfo" class="album-list-item__content">
-      <AlbumCover
-        :cover-url="albumInfo.strAlbumThumb || ''"
-        :album-name="albumInfo.strAlbum"
-      />
+      <NuxtLink :to="`/${albumInfo.idAlbum || ''}`">
+        <AlbumCover
+          :album-info="albumInfo"
+          :disable-hover-effect="viewType === 'list'"
+        />
+      </NuxtLink>
 
-      <div
-        v-if="viewType === 'list' && albumInfo.strDescriptionEN"
-        class="album-list-item__info"
-      >
-        <h2>{{ `${albumInfo.strAlbum} (${albumInfo.intYearReleased})` }}</h2>
+      <div v-if="viewType === 'list'" class="album-list-item__info">
+        <h2 class="album-list-item__header">
+          {{ `${albumInfo.strAlbum} (${albumInfo.intYearReleased})` }}
+        </h2>
+        <Rating :album-id="albumInfo.idAlbum" />
 
-        <div class="album-list-item__description">
+        <div
+          v-if="albumInfo.strDescriptionEN"
+          class="album-list-item__description"
+        >
           <p class="album-list-item__description-text">
             {{ albumInfo.strDescriptionEN }}
           </p>
-          <button
-            v-if="albumInfo.strDescriptionEN.length >= 635"
-            class="album-list-item__expand-button"
-          >
-            Read more
-          </button>
+          <NuxtLink :to="`/${albumInfo.idAlbum || ''}`">
+            <button
+              v-if="albumInfo.strDescriptionEN.length >= 635"
+              class="album-list-item__expand-button"
+            >
+              Read more
+            </button>
+          </NuxtLink>
         </div>
       </div>
       <div
@@ -54,9 +61,6 @@ defineProps<{
     gap: 0.5rem;
   }
 
-  &__info {
-  }
-
   &__description {
     display: grid;
     gap: 0.5rem;
@@ -64,7 +68,7 @@ defineProps<{
   }
 
   &__description-text {
-    max-height: 195px;
+    max-height: 198px;
     overflow-y: hidden;
     margin: 0;
   }
@@ -76,6 +80,15 @@ defineProps<{
     &:hover {
       color: rgb(129, 192, 129);
     }
+  }
+
+  &__info {
+    display: grid;
+    gap: 1rem;
+  }
+
+  &__header {
+    margin: 0;
   }
 
   &__fallback-text {

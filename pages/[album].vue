@@ -8,44 +8,45 @@ const {
 } = await useFetch(
   `https://www.theaudiodb.com/api/v1/json/2/album.php?m=${params.album}`
 );
-const albumData: AlbumInfo = (value as any).album[0];
+const albumInfo: AlbumInfo = (value as any).album[0];
 </script>
 
 <template>
   <Page>
     <PageHeader
-      :additional-info="albumData.intYearReleased"
-      :title="albumData.strAlbum || 'Unknown'"
+      :additional-info="albumInfo.intYearReleased?.toString()"
+      :title="albumInfo.strAlbum || 'Unknown'"
     />
     <div class="album-details__options">
       <NuxtLink to="/"><ArrowBack /> Go back</NuxtLink>
     </div>
-    <AlbumCover
-      :cover-url="albumData.strAlbumThumb"
-      :album-name="albumData.strAlbum"
-      :disable-hover-effect="true"
-    />
+    <AlbumCover :album-info="albumInfo" :disable-hover-effect="true" />
 
     <div class="album-details__info">
+      <Rating
+        v-if="albumInfo.intScoreVotes"
+        :fixed-rating="parseInt(albumInfo.intScoreVotes)"
+      />
+      <Rating :album-id="albumInfo.idAlbum" />
       <div
-        v-if="albumData.strDescriptionEN"
+        v-if="albumInfo.strDescriptionEN"
         class="album-details__info-section"
       >
-        <h2>Description</h2>
+        <h3>Description</h3>
         <p>
-          {{ albumData.strDescriptionEN }}
+          {{ albumInfo.strDescriptionEN }}
         </p>
       </div>
       <div
         v-if="
-          albumData.strReview &&
-          albumData.strReview !== albumData.strDescriptionEN
+          albumInfo.strReview &&
+          albumInfo.strReview !== albumInfo.strDescriptionEN
         "
         class="album-details__info-section"
       >
-        <h2>Review</h2>
+        <h3>Review</h3>
         <p>
-          {{ albumData.strReview }}
+          {{ albumInfo.strReview }}
         </p>
       </div>
     </div>
@@ -65,8 +66,6 @@ const albumData: AlbumInfo = (value as any).album[0];
   &__info {
     display: grid;
     gap: 0.5rem;
-    &-section {
-    }
   }
 }
 </style>
